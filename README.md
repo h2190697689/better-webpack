@@ -68,15 +68,27 @@ plugins: [
 ]
 ```
 
-## PostCss
-1. autoprefixer
-2. css-nano (压缩css)
-3. css-next (css的新语法， css变量,自定义选择器,calc)
+## tree-shaking 
+> Tree Shaking 只支持 ES Module(静态引入)
+1. 配置(mode: development)
+```
+webpack.config.js(mode: production下可不配置):
+optimization: {
+    usedExports: true
+}
 
-## tree-shaking
+package.json:  (任何模式都需要配置)
+"sideEffects": false / ["@babel/polly-fill","*.css"]
+```
 1. UglifyJsPlugin
 2. babel-plugin-lodash
 3. purifycss-webpack
 4. glob-all
+
+
+## PostCss
+1. autoprefixer
+2. css-nano (压缩css)
+3. css-next (css的新语法， css变量,自定义选择器,calc)
 
 ## img-loader (图片压缩)

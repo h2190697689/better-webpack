@@ -4,6 +4,7 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const Webpack = require("webpack");
 
 module.exports = {
+    mode: "development",
     entry: "./index.js",
     output: {
         path: path.resolve(__dirname,"./dist"),
@@ -13,6 +14,7 @@ module.exports = {
     },
     // 代码分割(webpack4.x以前使用CommonsChunkPlugin
     optimization: {
+        usedExports: true,  // treesharking
         splitChunks: {
             chunks: 'all'
         }
@@ -27,29 +29,29 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: "ts-loader"
             },
-            // {
-            //     test: /\.css$/,
-            //     loader: "postcss-loader",
-            //     options: {
-            //         ident: "postcss",
-            //         plugins: [
-            //             require("autoprefixer")(),
-            //             require("postcss-cssnext")(),
-            //             require("postcss-sprites")({
+            {
+                test: /\.css$/,
+                loader: "postcss-loader",
+                options: {
+                    ident: "postcss",
+                    plugins: [
+                        require("autoprefixer")(),
+                        require("postcss-cssnext")(),
+                        require("postcss-sprites")({
                             
-            //             })  // 合成雪碧图
-            //         ]
-            //     }
-            // },
+                        })  // 合成雪碧图
+                    ]
+                }
+            },
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
                 use: [
                     {
-                        loader: "url-loader",
+                        loader: "url-loader",  // base64 打包
                         options: {
-                            limit: 1000,
+                            limit: 2048,
                             publicPath: "",
-                            outputPath: "dist/",
+                            outputPath: "dist/", // 输出目录
                             useRelativePath: true
                         }
                     },
@@ -62,6 +64,16 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.(svg|eft))$/,
+                use: {
+                    loader: "ts-loader",
+                    options: {
+                        name: "[name]_[hash].[ext]",
+                        outputPath: "images/"   // 打包至某一个文件夹
+                    }
+                }
             }
         ]
     },
