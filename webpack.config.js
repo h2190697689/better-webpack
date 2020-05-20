@@ -1,6 +1,9 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");  // 打包分析工具
+const  MiniCssExtractPlugin = require("mini-css-extract-plugin");   // css代码分割(不进行热更新，所以最好在线上环境使用)
+const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");  //css代码压缩
+const UglifyjsWebpackPlugin = require("uglifyjs-webpack-plugin")
 const Webpack = require("webpack");
 
 module.exports = {
@@ -10,14 +13,22 @@ module.exports = {
         path: path.resolve(__dirname,"./dist"),
         publicPath: "./dist/",
         filename: "[name].bundle.js",
-        chunkFilename: "[name].chunk.js"
+        chunkFilename: "[name].chunk.js" // 代码分割时，依赖库打包名称
     },
     // 代码分割(webpack4.x以前使用CommonsChunkPlugin
     optimization: {
         usedExports: true,  // treesharking
         splitChunks: {
             chunks: 'all'
-        }
+        },
+        minimizer:[
+            new UglifyjsWebpackPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true
+            }),
+            new OptimizeCssAssetsWebpackPlugin()
+        ]
     },
     module: {
         rules: [
@@ -68,7 +79,7 @@ module.exports = {
             {
                 test: /\.(svg|eft))$/,
                 use: {
-                    loader: "ts-loader",
+                    loader: "file-loader",
                     options: {
                         name: "[name]_[hash].[ext]",
                         outputPath: "images/"   // 打包至某一个文件夹
@@ -79,6 +90,10 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[name].chunk.css"
+        })
         // new Webpack.optimize.CommonsChunkPlugin({
         //     name: "common",
         //     mixChunks: 2

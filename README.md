@@ -25,7 +25,7 @@ entry: {
 ```
 optimization: {
     splitChunks: {
-        chunks: "async",  // 代码块  'all'(所有代码块)   'async'(按需加载代码块)  'initial'(初始化代码块)
+        chunks: "all",  // 代码块  'all'(所有代码块)   'async'(按需加载代码块)  'initial'(初始化代码块)
         minSize: 3000,  // 模块的最小体积
         minChunks: 1, // 模块的最小被引用次数
         maxAsyncRequests: 5, // 按需加载的最大并行请求数
@@ -55,6 +55,7 @@ import(
     /* webpackChunkName: 'mychunkname' */  
     /* webpackMode: lazy */
     /* webpackPrefetch: true */
+
     modulename
 )
 ```
@@ -80,6 +81,7 @@ optimization: {
 package.json:  (任何模式都需要配置)
 "sideEffects": false / ["@babel/polly-fill","*.css"]
 ```
+
 1. UglifyJsPlugin
 2. babel-plugin-lodash
 3. purifycss-webpack
