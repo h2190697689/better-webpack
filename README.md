@@ -172,6 +172,9 @@ new webpack.ProvidePlugin({
     代码中配置详解 service-wroker.js
 ```
 
+## typescritp代码约束
+1. 添加代码约束 @types/lodash  @types/jquery
+
 1. UglifyJsPlugin
 2. babel-plugin-lodash
 3. purifycss-webpack
