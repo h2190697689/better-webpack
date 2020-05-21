@@ -1,6 +1,7 @@
 # webpack
 
 ## 代码分割
+
 ### 实现方式
 1. 入口文件： 配置webpack多入口
 2. 重复代码： splitchunks插件
@@ -52,9 +53,9 @@ optimization: {
 2. import()     (babel-plugin-syntax-dynamic-import)
 ```
 import(
-    /* webpackChunkName: 'mychunkname' */  
-    /* webpackMode: lazy */
-    /* webpackPrefetch: true */
+    /* webpackChunkName: 'mychunkname' */   // chunk名称
+    /* webpackMode: lazy */      // 懒加载
+    /* webpackPrefetch: true */   // 预加载
 
     modulename
 )
@@ -80,6 +81,95 @@ optimization: {
 
 package.json:  (任何模式都需要配置)
 "sideEffects": false / ["@babel/polly-fill","*.css"]
+```
+
+## 浏览器缓存
+1. 文件更改，浏览器访问新的js内容
+```
+output: {
+    path: path.resolve(__dirname,"./dist"),
+    filename: "[name].[contenthash].js",
+    chunkname: "[name].[contenthash].chunk.js"
+}
+
+* 老版本额外配置项
+optimization: {
+    runtimeChunk: {
+        name："runtime"
+    }
+}
+```
+
+## shimming垫片
+1. 全局可引用的变量
+```
+new webpack.ProvidePlugin({
+    $: "jquery",
+    _: "lodash",
+    _join: ["lodash","join"]
+})
+```
+2. 改变模块this指向
+```
+{
+    test: /\.js$/,
+    use: [
+        "babel-loader",
+        "imports-loader?this=>window"
+    ]
+}
+```
+
+
+## 环境变量
+1. 通过环境变量确定webpack配置
+```
+    package.json文件中：
+    "build": "webpack --env.production --config ./build/weback.product.js"
+
+    webpack.js文件中：
+    module.exports = (env)=>{
+        if(env && env.production){
+            return merge(commonConfig, prodConfig);
+        } else{
+            return merge(commonConfig, devConfig);
+        }
+    }
+```
+
+
+## library打包
+1. package.json
+```
+    "name: "myName",
+    "main": "./dist/library.js",
+    "license": "MIT"  // 完全开源形式
+```
+2. webpack.config.js
+```
+    output: {
+        path: path.resolve(__dirname,"dist"),
+        filename: "library.js",
+        libraryTarget: "umd",  // amd, es6, common.js 方式引入
+        library: "myLibrary",  // <script>方式引入，挂载到全局变量上面
+        externals: ["lodash"]
+    }
+```
+
+## PWA (服务器挂了，通过缓存，仍能展示网页)
+1. webpack中实现PWA技术
+- workbox-webpack-plugin
+```
+    const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+    
+    plugins: [
+        new WorkboxWebpackPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true
+        })
+    ]
+
+    代码中配置详解 service-wroker.js
 ```
 
 1. UglifyJsPlugin
