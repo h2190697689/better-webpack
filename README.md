@@ -71,7 +71,7 @@ plugins: [
 ```
 
 ## tree-shaking 
-> Tree Shaking 只支持 ES Module(静态引入)
+> Tree Shaking 只支持 ES6 Module(静态引入)
 1. 配置(mode: development)
 ```
 webpack.config.js(mode: production下可不配置):
@@ -175,10 +175,56 @@ new webpack.ProvidePlugin({
 ## typescritp代码约束
 1. 添加代码约束 @types/lodash  @types/jquery
 
+
+
+## eslint
+1. 代码规范
+```
+{
+    test: /\.jsx?$/,
+    use: ["babel-loader","eslint-loader"]
+}
+
+devServer{
+    overlay: true
+}
+```
+2. eslint-loader
+```
+{
+    loader: "eslint-loader",
+    options: {
+        fix: true
+    },
+    force: "pre"   // loader 先执行
+}
+```
+
+
+## webpack优化
+1. node, npm, yarn升级
+2. 尽可能少的模块上应用loader  exclude include
+3. 合理使用插件
+4. resolve(合理)
+```
+resolve: {
+    extensions: [".js",".jsx"],  // 文件引入时省略后缀
+    mainFiles: ["index","child"],  // 目录下优先查找文件
+    alias: {
+        @: path.resolve(__dirname,"./src")  // 别名配置
+    }
+}
+```
+5. 
+
+
+
+
 1. UglifyJsPlugin
 2. babel-plugin-lodash
 3. purifycss-webpack
 4. glob-all
+5. performance 不显示打包性能问题
 
 
 ## PostCss
