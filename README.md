@@ -215,7 +215,19 @@ resolve: {
     }
 }
 ```
-5. 
+5. webpack.DllPlugin
+```
+*  依赖中单独一份webpack文件
+new webpack.DllPlugin({
+    name: "[name]",
+    path: path.resolve(__dirname, "../dll/[name].manifest.json")
+})
+
+*  真正打包中的webpack文件
+new webpack.DllReferencePlugin({
+    manifest: path.resolve(__dirname, "../dll/vendors.manifest.json")
+})
+```
 
 
 

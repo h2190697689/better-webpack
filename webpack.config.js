@@ -3,7 +3,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");  // 打包分析工具
 const  MiniCssExtractPlugin = require("mini-css-extract-plugin");   // css代码分割(不进行热更新，所以最好在线上环境使用)
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");  //css代码压缩
-const UglifyjsWebpackPlugin = require("uglifyjs-webpack-plugin")
+const UglifyjsWebpackPlugin = require("uglifyjs-webpack-plugin");
+const AddAssetHtmlWebpackPlugin = require("add-asset-html-webpack-plugin");   //往打包生成的index.html中添加内容
 const Webpack = require("webpack");
 
 module.exports = {
