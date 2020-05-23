@@ -1,14 +1,14 @@
 # webpack
+> 该部分暂时只包括优化部分，loader使用配置，可以阅读文档
 
 ## 代码分割
+> 实现方式
+>> 1. 入口文件： 配置webpack多入口
+>> 2. 重复代码： splitchunks插件
+>> 3. 动态引入： import() 或者 require.ensure()
 
-### 实现方式
-1. 入口文件： 配置webpack多入口
-2. 重复代码： splitchunks插件
-3. 动态引入： import() 或者 require.ensure()
-
-#### 入口配置
-1. 
+1. 入口配置
+- entry 配置
 ```
 entry: {
     app: "./app.js",
@@ -16,13 +16,14 @@ entry: {
 }
 ```
 
-#### SplitChunksPlugin
-1. webpack4.x以后，CommonsChunkPlugin被取代
-- 共享代码块或者node_modules 文件夹中代码块
-- 分割体积大于30KB的代码块
-- 按需加载代码块时的并行请求数量不超过5个
-- 加载初始页面时的并行请求数量不超过3个
-2. 配置
+2. SplitChunksPlugin
+- webpack4.x以后，CommonsChunkPlugin被取代
+* 共享代码块或者node_modules 文件夹中代码块
+* 分割体积大于30KB的代码块
+* 按需加载代码块时的并行请求数量不超过5个
+* 加载初始页面时的并行请求数量不超过3个
+
+- 配置
 ```
 optimization: {
     splitChunks: {
@@ -48,9 +49,9 @@ optimization: {
 }
 ```
 
-#### 动态引入
-1. require.ensure
-2. import()     (babel-plugin-syntax-dynamic-import)
+3. 动态引入
+- require.ensure
+- import()     (babel-plugin-syntax-dynamic-import)
 ```
 import(
     /* webpackChunkName: 'mychunkname' */   // chunk名称
@@ -61,7 +62,7 @@ import(
 )
 ```
 
-### 依赖分析
+## 依赖分析
 1. webpack-bundle-analyzer
 ```
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -152,7 +153,7 @@ new webpack.ProvidePlugin({
         filename: "library.js",
         libraryTarget: "umd",  // amd, es6, common.js 方式引入
         library: "myLibrary",  // <script>方式引入，挂载到全局变量上面
-        externals: ["lodash"]
+        externals: ["lodash"]  // 不打包依赖
     }
 ```
 
