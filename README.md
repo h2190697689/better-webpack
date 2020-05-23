@@ -217,15 +217,59 @@ resolve: {
 ```
 5. webpack.DllPlugin
 ```
-*  依赖中单独一份webpack文件
+* 依赖中单独一份webpack文件
 new webpack.DllPlugin({
     name: "[name]",
     path: path.resolve(__dirname, "../dll/[name].manifest.json")
 })
 
-*  真正打包中的webpack文件
+* 真正打包中的webpack文件
+new AddAssetHtmlWebpackPlugin({
+    filepath: path.resolve(__dirname, "./dll/vendors.dll.js")
+}),
 new webpack.DllReferencePlugin({
     manifest: path.resolve(__dirname, "../dll/vendors.manifest.json")
+})
+
+* 真正打包时，实现动态地加载
+const files = fs.readdirSync(path.resolve(__dirname,"./dll"));
+files.forEach(file => {
+    if(/.*\.dll\.js/.test(file)) {
+        plugins.push(new AddAssetHtmlWebpackPlugin({
+            filepath: path.resolve(__dirname, `./dll/${file}`)
+        }))
+    } else{
+        plugins.push(
+            new webpack.DllReferencePlugin({
+                manifest: path.resolve(__dirname, `../dll/${file}`)
+            })
+        )
+    }
+})
+```
+6. thread-loader,  parallel-webpack, happypack 多进程打包
+7. 合理使用sourceMap
+
+
+## 多页面应用打包
+1. entry
+```
+entry: {
+    main: "./src/index.js",
+    list: "./src/list.js"
+}
+```
+2. html-webpack-plugin
+```
+new HtmlWebpackPlugin({
+    template: "src/index.html",
+    filename: "index.html",
+    chunks: ["runtime","vendors","main"]
+})
+new HtmlWebpackPlugin({
+    template: "src/index.html",
+    filename: "list.html",
+    chunks: ["runtime","vendors","list"]
 })
 ```
 

@@ -1,3 +1,8 @@
+/**
+ * @author hejiamin
+ * @description 可结合README.md
+ * @date 2020/5/22
+ */
 const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");  // 打包分析工具
@@ -94,11 +99,23 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[name].chunk.css"
-        })
+        }),
         // new Webpack.optimize.CommonsChunkPlugin({
         //     name: "common",
         //     mixChunks: 2
         // })
+        new AddAssetHtmlWebpackPlugin({
+            filepath: path.resolve(__dirname, "./dll/lodash.dll.js")
+        }),
+        new AddAssetHtmlWebpackPlugin({
+            filepath: path.resolve(__dirname, "./dll/react.dll.js")
+        }),
+        new webpack.DllReferencePlugin({
+            manifest: path.resolve(__dirname, "./dll/lodash.manifest.json")
+        }),
+        new webpack.DllReferencePlugin({
+            manifest: path.resolve(__dirname, "./dll/react.manifest.json")
+        })
         // new BundleAnalyzerPlugin()
     ],
     devServer: {

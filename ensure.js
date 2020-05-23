@@ -1,5 +1,5 @@
 /**
- * 代码分隔，异步加载
+ * @description 代码分隔，异步加载
  */
 require.ensure(["lodash"],function(){   // 这里的lodash可以省略
     var _ = require("lodash");

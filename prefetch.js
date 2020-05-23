@@ -1,5 +1,5 @@
 /**
- * 代码预加载
+ * @description 代码预加载
  */
 window.onclick = function(){
     import( /* webpackPrefetch: true */ "./click.js").then(({default: func})=>{
