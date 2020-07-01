@@ -16,8 +16,6 @@ entry: {
 
 2. SplitChunksPlugin(重复代码)
 - webpack4.x以后，CommonsChunkPlugin被取代
-
-- 配置
 ```
 optimization: {
     splitChunks: {
