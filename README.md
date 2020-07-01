@@ -15,11 +15,7 @@ entry: {
 ```
 
 2. SplitChunksPlugin(重复代码)
-- webpack4.x以后，CommonsChunkPlugin被取代
-* 共享代码块或者node_modules 文件夹中代码块
-* 分割体积大于30KB的代码块
-* 按需加载代码块时的并行请求数量不超过5个
-* 加载初始页面时的并行请求数量不超过3个
+> webpack4.x以后，CommonsChunkPlugin被取代
 
 - 配置
 ```
@@ -50,6 +46,7 @@ optimization: {
 3. 动态引入(import() 或者 require.ensure())
 - require.ensure
 - import()     (babel-plugin-syntax-dynamic-import)
+
 ```
 import(
     /* webpackChunkName: 'mychunkname' */   // chunk名称
@@ -61,6 +58,7 @@ import(
 
 
 ### 依赖分析
+
 1. webpack-bundle-analyzer
 ```
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -71,6 +69,7 @@ plugins: [
 
 ### tree-shaking 
 > Tree Shaking 只支持 ES6 Module(静态引入)
+
 1. 配置(mode: development)
 ```
 webpack.config.js(mode: production下可不配置):
@@ -83,6 +82,7 @@ package.json:  (任何模式都需要配置)
 ```
 
 ###  浏览器长缓存
+
 1. 文件更改，浏览器访问新的js内容
 ```
 output: {
