@@ -15,7 +15,7 @@ entry: {
 ```
 
 2. SplitChunksPlugin(重复代码)
-> webpack4.x以后，CommonsChunkPlugin被取代
+>> webpack4.x以后，CommonsChunkPlugin被取代
 
 - 配置
 ```
@@ -57,6 +57,7 @@ import(
 ```
 
 
+
 ### 依赖分析
 
 1. webpack-bundle-analyzer
@@ -66,6 +67,8 @@ plugins: [
     new BundleAnalyzerPlugin()
 ]
 ```
+
+
 
 ### tree-shaking 
 > Tree Shaking 只支持 ES6 Module(静态引入)
@@ -80,6 +83,8 @@ optimization: {
 package.json:  (任何模式都需要配置)
 "sideEffects": false / ["@babel/polly-fill","*.css"]
 ```
+
+
 
 ###  浏览器长缓存
 
@@ -106,6 +111,7 @@ optimization: {
 ```
 
 
+
 ### shimming垫片
 
 1. 全局可引用的变量
@@ -129,6 +135,8 @@ new webpack.ProvidePlugin({
 ```
 
 
+
+
 ### 环境变量
 
 1. 通过环境变量确定webpack配置
@@ -145,6 +153,7 @@ new webpack.ProvidePlugin({
         }
     }
 ```
+
 
 
 ### library打包(库文件)
@@ -168,6 +177,8 @@ new webpack.ProvidePlugin({
 ```
 
 
+
+
 ### PWA (服务器挂了，通过缓存，仍能展示网页)
 1. webpack中实现PWA技术
 - workbox-webpack-plugin
@@ -184,8 +195,12 @@ new webpack.ProvidePlugin({
     代码中配置详解 service-wroker.js
 ```
 
+
+
+
 ### typescritp代码约束
 1. 添加代码约束 @types/lodash  @types/jquery
+
 
 
 
@@ -211,6 +226,7 @@ devServer{
     force: "pre"   // loader 先执行
 }
 ```
+
 
 
 ## webpack优化
@@ -263,6 +279,8 @@ files.forEach(file => {
 7. 合理使用sourceMap
 
 
+
+
 ### 多页面应用打包
 1. entry
 ```
@@ -285,7 +303,13 @@ new HtmlWebpackPlugin({
 })
 ```
 
+
+
+
 ###  属性说明：performance 不显示打包性能问题
+
+
+
 
 ### PostCss
 1. autoprefixer
