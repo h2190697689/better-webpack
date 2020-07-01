@@ -2,7 +2,7 @@
 > 该部分暂时只包括优化部分，loader，plugins使用配置，可以[阅读文档](https://webpack.github.io/)
 
 
-#### 代码分割
+### 代码分割
 > 实现方式
 
 1. 入口配置(配置webpack多入口)
@@ -15,7 +15,7 @@ entry: {
 ```
 
 2. SplitChunksPlugin(重复代码)
->> webpack4.x以后，CommonsChunkPlugin被取代
+- webpack4.x以后，CommonsChunkPlugin被取代
 
 - 配置
 ```
@@ -58,7 +58,7 @@ import(
 
 
 
-#### 依赖分析
+### 依赖分析
 
 1. webpack-bundle-analyzer
 ```
@@ -70,7 +70,7 @@ plugins: [
 
 
 
-#### tree-shaking 
+### tree-shaking 
 > Tree Shaking 只支持 ES6 Module(静态引入)
 
 1. 配置(mode: development)
@@ -86,7 +86,7 @@ package.json:  (任何模式都需要配置)
 
 
 
-####  浏览器长缓存
+###  浏览器长缓存
 
 1. 文件更改，浏览器访问新的js内容
 ```
@@ -112,7 +112,7 @@ optimization: {
 
 
 
-#### shimming垫片
+### shimming垫片
 
 1. 全局可引用的变量
 ```
@@ -137,7 +137,7 @@ new webpack.ProvidePlugin({
 
 
 
-#### 环境变量
+### 环境变量
 
 1. 通过环境变量确定webpack配置
 ```
@@ -156,7 +156,7 @@ new webpack.ProvidePlugin({
 
 
 
-#### library打包(库文件)
+### library打包(库文件)
 
 1. package.json
 ```
@@ -179,7 +179,7 @@ new webpack.ProvidePlugin({
 
 
 
-#### PWA (服务器挂了，通过缓存，仍能展示网页)
+### PWA (服务器挂了，通过缓存，仍能展示网页)
 1. webpack中实现PWA技术
 - workbox-webpack-plugin
 ```
@@ -198,13 +198,13 @@ new webpack.ProvidePlugin({
 
 
 
-#### typescritp代码约束
+### typescritp代码约束
 1. 添加代码约束 @types/lodash  @types/jquery
 
 
 
 
-#### eslint
+### eslint
 1. 代码规范
 ```
 {
@@ -229,7 +229,7 @@ devServer{
 
 
 
-#### webpack优化
+### webpack优化
 1. node, npm, yarn升级
 2. 尽可能少的模块上应用loader  exclude  include
 3. 合理使用插件
@@ -281,7 +281,7 @@ files.forEach(file => {
 
 
 
-#### 多页面应用打包
+### 多页面应用打包
 1. entry
 ```
 entry: {
@@ -306,12 +306,12 @@ new HtmlWebpackPlugin({
 
 
 
-####  属性说明：performance 不显示打包性能问题
+###  属性说明：performance 不显示打包性能问题
 
 
 
 
-#### PostCss
+### PostCss
 1. autoprefixer
 2. css-nano (压缩css)
 3. css-next (css的新语法， css变量,自定义选择器,calc)
