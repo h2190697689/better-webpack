@@ -15,7 +15,7 @@ entry: {
 ```
 
 2. SplitChunksPlugin(重复代码)
->> webpack4.x以后，CommonsChunkPlugin被取代
+- webpack4.x以后，CommonsChunkPlugin被取代
 
 - 配置
 ```
