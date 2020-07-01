@@ -1,14 +1,11 @@
 ## webpack
-> 该部分暂时只包括优化部分，loader使用配置，可以[阅读文档](https://webpack.github.io/)
+> 该部分暂时只包括优化部分，loader，plugins使用配置，可以[阅读文档](https://webpack.github.io/)
 
 
-## 代码分割
+### 代码分割
 > 实现方式
->> 1. 入口文件： 配置webpack多入口
->> 2. 重复代码： splitchunks插件
->> 3. 动态引入： import() 或者 require.ensure()
 
-1. 入口配置
+1. 入口配置(配置webpack多入口)
 - entry 配置
 ```
 entry: {
@@ -17,7 +14,7 @@ entry: {
 }
 ```
 
-2. SplitChunksPlugin
+2. SplitChunksPlugin(重复代码)
 - webpack4.x以后，CommonsChunkPlugin被取代
 * 共享代码块或者node_modules 文件夹中代码块
 * 分割体积大于30KB的代码块
@@ -50,7 +47,7 @@ optimization: {
 }
 ```
 
-3. 动态引入
+3. 动态引入(import() 或者 require.ensure())
 - require.ensure
 - import()     (babel-plugin-syntax-dynamic-import)
 ```
@@ -58,12 +55,12 @@ import(
     /* webpackChunkName: 'mychunkname' */   // chunk名称
     /* webpackMode: lazy */      // 懒加载
     /* webpackPrefetch: true */   // 预加载
-
     modulename
 )
 ```
 
-## 依赖分析
+
+### 依赖分析
 1. webpack-bundle-analyzer
 ```
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -72,7 +69,7 @@ plugins: [
 ]
 ```
 
-## tree-shaking 
+### tree-shaking 
 > Tree Shaking 只支持 ES6 Module(静态引入)
 1. 配置(mode: development)
 ```
@@ -85,14 +82,20 @@ package.json:  (任何模式都需要配置)
 "sideEffects": false / ["@babel/polly-fill","*.css"]
 ```
 
-## 浏览器缓存
+###  浏览器长缓存
 1. 文件更改，浏览器访问新的js内容
 ```
 output: {
     path: path.resolve(__dirname,"./dist"),
-    filename: "[name].[contenthash].js",
-    chunkname: "[name].[contenthash].chunk.js"
+    filename: "[name].[contenthash:8].js",
+    chunkname: "[name].[contenthash:8].chunk.js"
 }
+plugins: [
+    new MiniCssExtractPlugin({
+        filename: [name].[contenthash:8].css,
+        chunkFilename: [name].[contenthash:8].css
+    })
+]
 
 * 老版本额外配置项
 optimization: {
@@ -102,7 +105,9 @@ optimization: {
 }
 ```
 
-## shimming垫片
+
+### shimming垫片
+
 1. 全局可引用的变量
 ```
 new webpack.ProvidePlugin({
@@ -111,6 +116,7 @@ new webpack.ProvidePlugin({
     _join: ["lodash","join"]
 })
 ```
+
 2. 改变模块this指向
 ```
 {
@@ -123,7 +129,8 @@ new webpack.ProvidePlugin({
 ```
 
 
-## 环境变量
+### 环境变量
+
 1. 通过环境变量确定webpack配置
 ```
     package.json文件中：
@@ -140,13 +147,15 @@ new webpack.ProvidePlugin({
 ```
 
 
-## library打包
+### library打包(库文件)
+
 1. package.json
 ```
     "name: "myName",
     "main": "./dist/library.js",
     "license": "MIT"  // 完全开源形式
 ```
+
 2. webpack.config.js
 ```
     output: {
@@ -158,7 +167,8 @@ new webpack.ProvidePlugin({
     }
 ```
 
-## PWA (服务器挂了，通过缓存，仍能展示网页)
+
+### PWA (服务器挂了，通过缓存，仍能展示网页)
 1. webpack中实现PWA技术
 - workbox-webpack-plugin
 ```
@@ -174,12 +184,12 @@ new webpack.ProvidePlugin({
     代码中配置详解 service-wroker.js
 ```
 
-## typescritp代码约束
+### typescritp代码约束
 1. 添加代码约束 @types/lodash  @types/jquery
 
 
 
-## eslint
+### eslint
 1. 代码规范
 ```
 {
@@ -205,9 +215,9 @@ devServer{
 
 ## webpack优化
 1. node, npm, yarn升级
-2. 尽可能少的模块上应用loader  exclude include
+2. 尽可能少的模块上应用loader  exclude  include
 3. 合理使用插件
-4. resolve(合理)
+4. resolve(合理)：extensions,alias
 ```
 resolve: {
     extensions: [".js",".jsx"],  // 文件引入时省略后缀
@@ -249,11 +259,11 @@ files.forEach(file => {
     }
 })
 ```
-6. thread-loader,  parallel-webpack, happypack 多进程打包
+6. thread-loader,  parallel-webpack(webpack-parallel-uglify-plugin), happypack 多进程打包
 7. 合理使用sourceMap
 
 
-## 多页面应用打包
+### 多页面应用打包
 1. entry
 ```
 entry: {
@@ -275,24 +285,9 @@ new HtmlWebpackPlugin({
 })
 ```
 
+###  属性说明：performance 不显示打包性能问题
 
-
-
-1. UglifyJsPlugin
-2. babel-plugin-lodash
-3. purifycss-webpack
-4. glob-all
-5. performance 不显示打包性能问题
-
-
-## PostCss
-1. autoprefixer
-2. css-nano (压缩css)
-3. css-next (css的新语法， css变量,自定义选择器,calc)
-
-
-
-## PostCss
+### PostCss
 1. autoprefixer
 2. css-nano (压缩css)
 3. css-next (css的新语法， css变量,自定义选择器,calc)
