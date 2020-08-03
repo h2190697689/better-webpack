@@ -169,9 +169,9 @@ new webpack.ProvidePlugin({
         path: path.resolve(__dirname,"dist"),
         filename: "library.js",
         libraryTarget: "umd",  // amd, es6, common.js 方式引入
-        library: "myLibrary",  // <script>方式引入，挂载到全局变量上面
-        externals: ["lodash"]  // 不打包依赖
-    }
+        library: "myLibrary"  // <script>方式引入，挂载到全局变量上面
+    }，
+    externals: ["lodash"]  // 不打包依赖
 ```
 
 
